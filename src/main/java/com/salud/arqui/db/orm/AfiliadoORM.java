@@ -5,15 +5,17 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Table(name = "afiliado")
 @Entity
 @Data
 @NoArgsConstructor
-public class AfliliadoORM {
+public class AfiliadoORM {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id_afiliado;
 
     @Column
     private String nombre;
@@ -26,6 +28,9 @@ public class AfliliadoORM {
 
     @Column
     private String genero;
+
+    @OneToMany
+    private List<CitaMedicaORM> citasMedicas;
 
 
 
