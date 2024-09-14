@@ -35,8 +35,7 @@ public class AfiliadoService {
     }
 
     public AfiliadoORM buscarAfiliadoId(Long id){
-        AfiliadoORM afiliado = afiliadoJPA.findById(id).orElse(null);
-        return afiliado;
+        return afiliadoJPA.findById(id).orElse(null);
     }
 
 
