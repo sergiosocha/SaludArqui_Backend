@@ -11,4 +11,6 @@ public interface AfiliadoJPA extends JpaRepository<AfiliadoORM, Long> {
 
     @Override
     List<AfiliadoORM> findAll();
+
+
 }

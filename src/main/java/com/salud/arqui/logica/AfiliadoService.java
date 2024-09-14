@@ -6,6 +6,8 @@ import com.salud.arqui.db.orm.AfiliadoORM;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class AfiliadoService {
@@ -22,6 +24,22 @@ public class AfiliadoService {
         afiliadoJPA.save(nuevoAfiliado);
         return true;
     }
+
+
+    public List<AfiliadoORM> listaAfiliados(){
+        return afiliadoJPA.findAll();
+    }
+
+    public void eliminarAfiliado(Long id){
+        afiliadoJPA.deleteById(id);
+    }
+
+    public AfiliadoORM buscarAfiliadoId(Long id){
+        AfiliadoORM afiliado = afiliadoJPA.findById(id).orElse(null);
+        return afiliado;
+    }
+
+
 
 
 
