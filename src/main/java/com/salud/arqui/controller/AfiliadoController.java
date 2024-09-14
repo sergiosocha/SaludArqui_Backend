@@ -40,7 +40,7 @@ public class AfiliadoController {
     public ResponseEntity<AfiliadoORM> obtenerAfiliadoId(@PathVariable Long id){
         AfiliadoORM afiliado = afiliadoService.buscarAfiliadoId(id);
         if(afiliado == null)
-            System.out.println("No se encontro el empelado Solicitado con id: " + id)
+            System.out.println("No se encontro el afiliado Solicitado con id: " + id)
                     ;
         return ResponseEntity.ok(afiliado);
 

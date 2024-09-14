@@ -8,6 +8,7 @@ import com.salud.arqui.db.orm.BeneficiarioORM;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -37,6 +38,18 @@ public class BeneficiarioService {
         beneficiarioORM.setAfliliadoORM(afiliadoVerify.get());
         beneficiarioJPA.save(beneficiarioORM);
         return true;
-
     }
+
+    public List<BeneficiarioORM> listaBeneficiario(){
+        return beneficiarioJPA.findAll();
+    }
+
+    public void eliminarBeneficiario(Long id){
+        beneficiarioJPA.deleteById(id);
+    }
+
+    public BeneficiarioORM buscarBeneficiarioId(Long id){
+        return beneficiarioJPA.findById(id).orElse(null);
+    }
+
 }
