@@ -35,7 +35,4 @@ public class HistorialMedicoController {
         return "Historial medico eliminado";
     }
 
-
-
-
 }
