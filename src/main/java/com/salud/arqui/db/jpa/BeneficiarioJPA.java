@@ -11,4 +11,6 @@ import java.util.Optional;
 public interface BeneficiarioJPA extends JpaRepository<BeneficiarioORM, Long> {
 
     Optional<BeneficiarioORM> findByAfliliadoORM(AfiliadoORM afiliado);
+
+
 }
