@@ -3,7 +3,6 @@ package com.salud.arqui.controller;
 
 import com.salud.arqui.controller.dto.HistorialMedicoDTO;
 import com.salud.arqui.logica.HistorialMedicoService;
-import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -20,7 +19,7 @@ public class HistorialMedicoController {
 
     @PostMapping(path= "/HistorialMedico")
     public String guardarHistorialMedico(@RequestBody HistorialMedicoDTO historialMedicoDTO) {
-        historialMedicoService.nuevoHistoriaMedica(historialMedicoDTO.tipoConsulta(), historialMedicoDTO.detalle());
+        historialMedicoService.guardarHistorialMedica(historialMedicoDTO.tipoConsulta(), historialMedicoDTO.detalle());
         return "Historial medico guardado";
     }
 
@@ -29,10 +28,10 @@ public class HistorialMedicoController {
         return HistorialMedico;
     }
 
-    @DeleteMapping(path = "/citaMedica/{id}")
+    /*@DeleteMapping(path = "/citaMedica/{id}")
     public String eliminarHistorialMedico(@PathVariable Long id) {
         historialMedicoService.eliminarHistorialMedico(id);
         return "Historial medico eliminado";
-    }
+    }*/
 
 }
