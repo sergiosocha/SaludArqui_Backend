@@ -17,11 +17,11 @@ public class CitaMedicaService {
 
     private final CitaMedicaJPA citaMedicaJPA;
 
-    public boolean guardarCitaMedica(String tipoDeCita, String descripcion, String fechaConsulta){
+    public boolean guardarCitaMedica(String tipoDeCita, String descripcion, LocalDate fechaConsulta){
 
         CitaMedicaORM nuevaCitaMedica = new CitaMedicaORM();
         nuevaCitaMedica.setDescripcion(descripcion);
-        nuevaCitaMedica.setFecha_consulta(LocalDate.now());
+        nuevaCitaMedica.setFecha_consulta(fechaConsulta);
         nuevaCitaMedica.setTipo_de_cita(tipoDeCita);
         citaMedicaJPA.save(nuevaCitaMedica);
         return true;

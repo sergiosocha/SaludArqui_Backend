@@ -7,6 +7,7 @@ import com.salud.arqui.db.orm.BeneficiarioORM;
 import com.salud.arqui.logica.AfiliadoService;
 import com.salud.arqui.logica.BeneficiarioService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,6 +43,24 @@ public class BeneficiarioController {
         if(beneficiario == null)
             System.out.println("No se encontro el beneficiario Solicitado con id: " + id);
         return ResponseEntity.ok(beneficiario);
+    }
+
+    @PutMapping(path = "/beneficiario/{id}")
+    public ResponseEntity<BeneficiarioORM> actualizarBeneficiario( @PathVariable Long id, @RequestBody BeneficiarioDTO beneficiarioDTO) {
+
+        if (id == null) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        boolean actualizado = beneficiarioService.actualizarBeneficiario(id, beneficiarioDTO);
+
+        if (!actualizado) {
+            return ResponseEntity.notFound().build();
+        }
+
+        BeneficiarioORM beneficiarioActualizado = beneficiarioService.buscarBeneficiarioId(id);
+
+        return ResponseEntity.ok(beneficiarioActualizado);
     }
 
 
