@@ -46,6 +46,24 @@ public class AfiliadoController {
 
     }
 
+    @PutMapping(path = "/afiliado/{id}")
+    public ResponseEntity<AfiliadoORM> actualizarAfiliado(@PathVariable Long id, @RequestBody AfiliadoORM afiliadoORMRecibido) {
+        AfiliadoORM afiliadoExistente = afiliadoService.buscarAfiliadoId(id);
+        if (afiliadoExistente == null) {
+            return ResponseEntity.notFound().build();
+        }
+        String nombre = afiliadoORMRecibido.getNombre();
+        Integer edad = afiliadoORMRecibido.getEdad();
+        String email = afiliadoORMRecibido.getEmail();
+        String genero = afiliadoORMRecibido.getGenero();
+
+        afiliadoService.actualizarAfiliado(id, nombre, edad, email, genero);
+
+        AfiliadoORM afiliadoActualizado = afiliadoService.buscarAfiliadoId(id);
+
+        return ResponseEntity.ok(afiliadoActualizado);
+    }
+
 
 
 

@@ -7,13 +7,13 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
 public class AfiliadoService {
 
     private final AfiliadoJPA afiliadoJPA;
-
 
     public boolean guardarAfiliado(String nombre, Integer edad, String email, String genero){
         AfiliadoORM nuevoAfiliado = new AfiliadoORM();
@@ -38,6 +38,22 @@ public class AfiliadoService {
         return afiliadoJPA.findById(id).orElse(null);
     }
 
+    public boolean actualizarAfiliado(Long id, String nombre, Integer edad, String email, String genero) {
+        Optional<AfiliadoORM> afiliadoExistente = afiliadoJPA.findById(id);
+
+        if (afiliadoExistente.isEmpty()) {
+            throw new IllegalArgumentException("El afiliado con id " + id + " no existe");
+        }
+
+        AfiliadoORM afiliado = afiliadoExistente.get();
+        afiliado.setNombre(nombre);
+        afiliado.setEdad(edad);
+        afiliado.setEmail(email);
+        afiliado.setGenero(genero);
+        afiliadoJPA.save(afiliado);
+
+        return true;
+    }
 
 
 
