@@ -4,6 +4,7 @@ package com.salud.arqui.logica;
 import com.salud.arqui.db.jpa.AfiliadoJPA;
 import com.salud.arqui.db.orm.AfiliadoORM;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.Optional;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class AfiliadoService {
 
     private final AfiliadoJPA afiliadoJPA;
@@ -42,7 +44,7 @@ public class AfiliadoService {
         Optional<AfiliadoORM> afiliadoExistente = afiliadoJPA.findById(id);
 
         if (afiliadoExistente.isEmpty()) {
-            throw new IllegalArgumentException("El afiliado con id " + id + " no existe");
+           log.info("El afiliado con id " + id + " no existe");
         }
 
         AfiliadoORM afiliado = afiliadoExistente.get();
