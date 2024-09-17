@@ -28,13 +28,14 @@ public class HistorialMedicoController {
     }
 
     @GetMapping(path = "/historialMedico/{id}")
-    public ResponseEntity<List<HistorialMedicoORM>>obtenerHistorialMedico(@PathVariable long id){
-        List<HistorialMedicoORM> historialMedico = (List<HistorialMedicoORM>) historialMedicoService.buscarHistorialMedico(id);
+    public ResponseEntity<HistorialMedicoORM> obtenerHistorialMedico(@PathVariable long id) {
+        HistorialMedicoORM historialMedico = historialMedicoService.buscarHistorialMedico(id);
         if (historialMedico == null) {
             return ResponseEntity.notFound().build();
         }
-        return  ResponseEntity.ok(historialMedico);
+        return ResponseEntity.ok(historialMedico);
     }
+
 
     /*@DeleteMapping(path = "/citaMedica/{id}")
     public String eliminarHistorialMedico(@PathVariable Long id) {
