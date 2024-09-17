@@ -7,6 +7,7 @@ import com.salud.arqui.db.orm.BeneficiarioORM;
 import com.salud.arqui.logica.AfiliadoService;
 import com.salud.arqui.logica.BeneficiarioService;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,7 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
+@Slf4j
 public class BeneficiarioController {
 
     private BeneficiarioService beneficiarioService;
@@ -41,7 +43,7 @@ public class BeneficiarioController {
     public ResponseEntity<BeneficiarioORM> obtenerBeneficiarioId(@PathVariable Long id){
         BeneficiarioORM beneficiario = beneficiarioService.buscarBeneficiarioId(id);
         if(beneficiario == null)
-            System.out.println("No se encontro el beneficiario Solicitado con id: " + id);
+            log.info("No se encontro el beneficiario Solicitado con id: " + id);
         return ResponseEntity.ok(beneficiario);
     }
 
