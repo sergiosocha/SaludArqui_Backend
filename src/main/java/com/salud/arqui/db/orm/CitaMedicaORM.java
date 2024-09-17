@@ -39,7 +39,4 @@ public class CitaMedicaORM {
     private HistorialMedicoORM historialMedicoORM;
 
 
-
-
-    //String tipoDeCita, String Descripcion, String fechaConsulta
 }

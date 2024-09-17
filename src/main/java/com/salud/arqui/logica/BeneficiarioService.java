@@ -7,6 +7,7 @@ import com.salud.arqui.db.jpa.BeneficiarioJPA;
 import com.salud.arqui.db.orm.AfiliadoORM;
 import com.salud.arqui.db.orm.BeneficiarioORM;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,15 +15,16 @@ import java.util.Optional;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class BeneficiarioService {
 
     private final BeneficiarioJPA beneficiarioJPA;
     private final AfiliadoJPA afiliadoJPA;
 
     public boolean guardarBeneficiario(String nombre, String email, Long idAfiliado) {
-        // Validar que idAfiliado no sea nulo
+
         if (idAfiliado == null) {
-            throw new IllegalArgumentException("El ID del afiliado no puede ser nulo.");
+            log.info("El ID del afiliado no puede ser nulo.");
         }
 
         Optional<AfiliadoORM> afiliadoVerify = afiliadoJPA.findById(idAfiliado);
@@ -36,7 +38,7 @@ public class BeneficiarioService {
         Optional<BeneficiarioORM> beneficiarioExistente = beneficiarioJPA.findByAfliliadoORM(afiliado);
 
         if (beneficiarioExistente.isPresent()) {
-            throw new IllegalArgumentException("El afiliado con id " + idAfiliado + " ya tiene un beneficiario registrado.");
+            log.info("El afiliado con id " + idAfiliado + " ya tiene un beneficiario registrado.");
         }
 
         BeneficiarioORM beneficiarioORM = new BeneficiarioORM();
@@ -62,7 +64,7 @@ public class BeneficiarioService {
 
     public boolean actualizarBeneficiario(Long id, BeneficiarioDTO beneficiarioDTO) {
         if (id == null) {
-            throw new IllegalArgumentException("El ID del beneficiario no puede ser nulo");
+            log.info("El ID del beneficiario no puede ser nulo");
         }
 
         Optional<BeneficiarioORM> beneficiarioExistente = beneficiarioJPA.findById(id);
