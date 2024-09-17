@@ -29,7 +29,7 @@ public class AfiliadoORM {
     @Column
     private String genero;
 
-    @OneToMany
+    @OneToMany()
     private List<CitaMedicaORM> citasMedicas;
 
 

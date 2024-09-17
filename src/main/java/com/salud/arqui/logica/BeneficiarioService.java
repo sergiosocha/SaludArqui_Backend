@@ -20,7 +20,7 @@ public class BeneficiarioService {
     private final AfiliadoJPA afiliadoJPA;
 
     public boolean guardarBeneficiario(String nombre, String email, Long idAfiliado) {
-        // Validar que idAfiliado no sea nulo
+
         if (idAfiliado == null) {
             throw new IllegalArgumentException("El ID del afiliado no puede ser nulo.");
         }
