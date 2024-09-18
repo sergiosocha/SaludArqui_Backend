@@ -37,7 +37,6 @@ public class CitaMedicaController {
                         new IllegalArgumentException("El ID del afiliado no existe."));
             }
 
-
             BeneficiarioORM beneficiario = null;
             if (request.idBeneficiario() != null) {
                 beneficiario = beneficiarioJPA.findById(request.idBeneficiario()).orElseThrow(() ->
