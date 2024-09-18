@@ -1,35 +1,54 @@
 package com.salud.arqui.logica;
 
+import com.salud.arqui.db.jpa.AfiliadoJPA;
+import com.salud.arqui.db.jpa.BeneficiarioJPA;
 import com.salud.arqui.db.jpa.HistorialMedicoJPA;
+import com.salud.arqui.db.orm.AfiliadoORM;
+import com.salud.arqui.db.orm.BeneficiarioORM;
 import com.salud.arqui.db.orm.HistorialMedicoORM;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 @AllArgsConstructor
 @Component
 public class HistorialMedicoService {
-
     private final HistorialMedicoJPA historialMedicoJPA;
+    private final AfiliadoJPA afiliadoJPA;
+    private final BeneficiarioJPA beneficiarioJPA;
 
-    public boolean guardarHistorialMedica(String tipoConsulta, String detalle){
 
-        HistorialMedicoORM nuevoHistorialMedico = new HistorialMedicoORM();
-        nuevoHistorialMedico.setTipo_consulta(tipoConsulta);
-        nuevoHistorialMedico.setDetalle(detalle);
-        historialMedicoJPA.save(nuevoHistorialMedico);
-        return true;
+    public HistorialMedicoORM crearHistorialParaAfiliado(Long idAfiliado) {
+        AfiliadoORM afiliado = afiliadoJPA.findById(idAfiliado).orElseThrow(() ->
+                new IllegalArgumentException("El afiliado no existe"));
+
+        HistorialMedicoORM nuevoHistorial = new HistorialMedicoORM();
+        nuevoHistorial.setAfiliadoORM(afiliado);
+        historialMedicoJPA.save(nuevoHistorial);
+
+        return nuevoHistorial;
     }
 
-    public List<HistorialMedicoORM> listarHistorialMedico(){
-        return historialMedicoJPA.findAll();
+    public HistorialMedicoORM crearHistorialParaBeneficiario(Long idBeneficiario) {
+        BeneficiarioORM beneficiario = beneficiarioJPA.findById(idBeneficiario).orElseThrow(() ->
+                new IllegalArgumentException("El beneficiario no existe"));
+
+        HistorialMedicoORM nuevoHistorial = new HistorialMedicoORM();
+        nuevoHistorial.setBeneficiarioORM(beneficiario);
+        historialMedicoJPA.save(nuevoHistorial);
+
+        return nuevoHistorial;
     }
 
-    public HistorialMedicoORM buscarHistorialMedico(Long id) {
-        return historialMedicoJPA.findById(id).orElse(null);
+
+    public HistorialMedicoORM buscarHistorialMedicoPorAfiliado(Long idAfiliado) {
+        return historialMedicoJPA.findByAfiliadoORM_idAfiliado(idAfiliado)
+                .orElseThrow(() -> new IllegalArgumentException("No se encontró el historial médico para el afiliado con ID: " + idAfiliado));
     }
 
+    public HistorialMedicoORM buscarHistorialMedicoPorBeneficiario(Long idBeneficiario) {
+        return historialMedicoJPA.findByBeneficiarioORM_idBeneficiario(idBeneficiario)
+                .orElseThrow(() -> new IllegalArgumentException("No se encontró el historial médico para el beneficiario con ID: " + idBeneficiario));
+    }
 }

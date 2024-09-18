@@ -1,6 +1,8 @@
 package com.salud.arqui.db.orm;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,23 +14,27 @@ import java.util.List;
 @Entity
 @Data
 @NoArgsConstructor
+//@JsonIgnoreProperties({"citasMedicas"})
 public class HistorialMedicoORM {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_historial_medico;
+    @Column(name = "id_historial_medico")
+    private Long idHistorialMedico;
 
 
-    @Column
-    private String tipo_consulta;
-
-    @Column
-    private String detalle;
-
-    @OneToMany
-    @JoinColumn(name = "historiaMedico")
+    @OneToMany(mappedBy = "historialMedicoORM")
+    @JsonManagedReference
     private List<CitaMedicaORM> citasMedicas;
 
+
+    @ManyToOne
+    @JoinColumn(name = "id_afiliado", nullable = true)
+    private AfiliadoORM afiliadoORM;
+
+    @ManyToOne
+    @JoinColumn(name = "id_beneficiario", nullable = true)
+    private BeneficiarioORM beneficiarioORM;
 
 
 

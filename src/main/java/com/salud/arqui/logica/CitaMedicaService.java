@@ -19,58 +19,52 @@ import java.util.List;
 @AllArgsConstructor
 @Component
 public class CitaMedicaService {
-
     private final CitaMedicaJPA citaMedicaJPA;
     private final AfiliadoJPA afiliadoJPA;
     private final BeneficiarioJPA beneficiarioJPA;
-    private final HistorialMedicoService historialMedicoService;
     private final HistorialMedicoJPA historialMedicoJPA;
 
-    public boolean guardarCitaMedica(String tipoDeCita, String descripcion, LocalDate fechaConsulta, Long idAfiliado) {
+    public boolean guardarCitaMedica(String tipoDeCita, String descripcion, LocalDate fechaConsulta,
+                                     Long idAfiliado, Long idBeneficiario, Long idHistorialMedico) {
 
+        AfiliadoORM afiliado = afiliadoJPA.findById(idAfiliado).orElseThrow(() ->
+                new IllegalArgumentException("El ID del afiliado no existe."));
 
-        if (idAfiliado == null) {
-            throw new IllegalArgumentException("El ID del afiliado no puede ser nulo.");
+        BeneficiarioORM beneficiario = null;
+        if (idBeneficiario != null) {
+            beneficiario = beneficiarioJPA.findById(idBeneficiario).orElseThrow(() ->
+                    new IllegalArgumentException("El ID del beneficiario no existe o ya está asignado a otro afiliado."));
         }
 
-
-
-        AfiliadoORM afiliado = afiliadoJPA.findById(idAfiliado).orElseThrow(()->
-                new IllegalArgumentException("El ID del afiliado no existe."));
-
-        BeneficiarioORM beneficiario = beneficiarioJPA.findByAfliliadoORM(afiliado).orElseThrow(()->
-                new IllegalArgumentException("No hay beneficiario asociado al afiliado"+ afiliado));
-
-        HistorialMedicoORM historialMedico = historialMedicoJPA.findById(idAfiliado).orElseThrow(()->
-                new IllegalArgumentException("El ID del afiliado no existe."));
+        HistorialMedicoORM historialMedico = historialMedicoJPA.findById(idHistorialMedico).orElseThrow(() ->
+                new IllegalArgumentException("El ID del historial médico no existe."));
 
         CitaMedicaORM nuevaCitaMedica = new CitaMedicaORM();
         nuevaCitaMedica.setDescripcion(descripcion);
-        nuevaCitaMedica.setFecha_consulta(fechaConsulta);
-        nuevaCitaMedica.setTipo_de_cita(tipoDeCita);
+        nuevaCitaMedica.setFechaConsulta(fechaConsulta);
+        nuevaCitaMedica.setTipoDeCita(tipoDeCita);
         nuevaCitaMedica.setAfiliadoORM(afiliado);
         nuevaCitaMedica.setBeneficiarioORM(beneficiario);
         nuevaCitaMedica.setHistorialMedicoORM(historialMedico);
 
-
         citaMedicaJPA.save(nuevaCitaMedica);
 
-        historialMedicoService.guardarHistorialMedica(tipoDeCita, descripcion);
-        return true;
 
+        historialMedico.getCitasMedicas().add(nuevaCitaMedica);
+        historialMedicoJPA.save(historialMedico);
+
+        return true;
     }
 
-    public List<CitaMedicaORM> listaCitasMedicas(){
+    public List<CitaMedicaORM> listaCitasMedicas() {
         return citaMedicaJPA.findAll();
     }
 
-    public void eliminarCitaMedica(Long id){
+    public void eliminarCitaMedica(Long id) {
         citaMedicaJPA.deleteById(id);
     }
 
-    public CitaMedicaORM getCitaMedicaById(Long id){
-        CitaMedicaORM citaMedica = citaMedicaJPA.findById(id).orElse(null);
-        return citaMedica;
+    public CitaMedicaORM getCitaMedicaById(Long id) {
+        return citaMedicaJPA.findById(id).orElse(null);
     }
-
 }

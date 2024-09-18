@@ -15,32 +15,25 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 public class HistorialMedicoController {
+    private final HistorialMedicoService historialMedicoService;
 
-    private HistorialMedicoService historialMedicoService;
-
-    List<HistorialMedicoDTO> HistorialMedico = new ArrayList<>();
-
-
-    @GetMapping(path = "/historialMedico/todo")
-    public ResponseEntity<List<HistorialMedicoORM>> obtenerHistorialesMedico() {
-        List<HistorialMedicoORM> historialMedico = historialMedicoService.listarHistorialMedico();
-        return  ResponseEntity.ok(historialMedico);
-    }
-
-    @GetMapping(path = "/historialMedico/{id}")
-    public ResponseEntity<HistorialMedicoORM> obtenerHistorialMedico(@PathVariable long id) {
-        HistorialMedicoORM historialMedico = historialMedicoService.buscarHistorialMedico(id);
-        if (historialMedico == null) {
+    @GetMapping(path = "/historialMedico/afiliado/{idAfiliado}")
+    public ResponseEntity<HistorialMedicoORM> obtenerHistorialMedicoPorAfiliado(@PathVariable long idAfiliado) {
+        HistorialMedicoORM historial = historialMedicoService.buscarHistorialMedicoPorAfiliado(idAfiliado);
+        if (historial == null) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(historialMedico);
+        return ResponseEntity.ok(historial);
     }
 
-
-    /*@DeleteMapping(path = "/citaMedica/{id}")
-    public String eliminarHistorialMedico(@PathVariable Long id) {
-        historialMedicoService.eliminarHistorialMedico(id);
-        return "Historial medico eliminado";
-    }*/
+    @GetMapping(path = "/historialMedico/beneficiario/{idBeneficiario}")
+    public ResponseEntity<HistorialMedicoORM> obtenerHistorialMedicoPorBeneficiario(@PathVariable long idBeneficiario) {
+        HistorialMedicoORM historial = historialMedicoService.buscarHistorialMedicoPorBeneficiario(idBeneficiario);
+        if (historial == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(historial);
+    }
 
 }
+

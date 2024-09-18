@@ -15,7 +15,8 @@ public class BeneficiarioORM {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_beneficiario;
+    @Column(name = "id_beneficiario")
+    private Long idBeneficiario;
 
     @Column
     private String nombre;

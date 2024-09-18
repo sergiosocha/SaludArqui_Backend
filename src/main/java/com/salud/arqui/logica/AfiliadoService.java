@@ -2,7 +2,9 @@ package com.salud.arqui.logica;
 
 
 import com.salud.arqui.db.jpa.AfiliadoJPA;
+import com.salud.arqui.db.jpa.HistorialMedicoJPA;
 import com.salud.arqui.db.orm.AfiliadoORM;
+import com.salud.arqui.db.orm.HistorialMedicoORM;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,7 @@ import java.util.Optional;
 public class AfiliadoService {
 
     private final AfiliadoJPA afiliadoJPA;
+    private final HistorialMedicoJPA historialMedicoJPA;
 
     public boolean guardarAfiliado(String nombre, Integer edad, String email, String genero){
         AfiliadoORM nuevoAfiliado = new AfiliadoORM();
@@ -24,6 +27,12 @@ public class AfiliadoService {
         nuevoAfiliado.setEmail(email);
         nuevoAfiliado.setGenero(genero);
         afiliadoJPA.save(nuevoAfiliado);
+
+        // Crear HistorialMedico asociado
+        HistorialMedicoORM nuevoHistorial = new HistorialMedicoORM();
+        nuevoHistorial.setAfiliadoORM(nuevoAfiliado);
+        historialMedicoJPA.save(nuevoHistorial);
+
         return true;
     }
 

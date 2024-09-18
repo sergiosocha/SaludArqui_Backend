@@ -15,7 +15,8 @@ public class AfiliadoORM {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_afiliado;
+    @Column(name = "id_afiliado")
+    private Long idAfiliado;
 
     @Column
     private String nombre;
