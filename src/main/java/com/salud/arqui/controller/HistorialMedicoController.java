@@ -1,15 +1,12 @@
 package com.salud.arqui.controller;
 
 
-import com.salud.arqui.controller.dto.HistorialMedicoDTO;
 import com.salud.arqui.db.orm.HistorialMedicoORM;
 import com.salud.arqui.logica.HistorialMedicoService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
 
 
 @RestController

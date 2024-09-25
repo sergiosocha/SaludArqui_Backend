@@ -30,7 +30,7 @@ public class BeneficiarioService {
         Optional<AfiliadoORM> afiliadoVerify = afiliadoJPA.findById(idAfiliado);
 
         if (afiliadoVerify.isEmpty()) {
-            throw new IllegalArgumentException("El afiliado con id " + idAfiliado + " no existe");
+            throw new IllegalArgumentException( idAfiliado + " no existe");
         }
 
         AfiliadoORM afiliado = afiliadoVerify.get();
@@ -38,7 +38,7 @@ public class BeneficiarioService {
         Optional<BeneficiarioORM> beneficiarioExistente = beneficiarioJPA.findByAfliliadoORM(afiliado);
 
         if (beneficiarioExistente.isPresent()) {
-            log.info("El afiliado con id " + idAfiliado + " ya tiene un beneficiario registrado.");
+            log.info( idAfiliado + " ya tiene un beneficiario registrado.");
         }
 
         BeneficiarioORM beneficiarioORM = new BeneficiarioORM();
@@ -80,7 +80,7 @@ public class BeneficiarioService {
 
         if (beneficiarioDTO.idAfiliado() != null) {
             AfiliadoORM afiliado = afiliadoJPA.findById(beneficiarioDTO.idAfiliado())
-                    .orElseThrow(() -> new IllegalArgumentException("El afiliado con id " + beneficiarioDTO.idAfiliado() + " no existe"));
+                    .orElseThrow(() -> new IllegalArgumentException("El afiliado " + beneficiarioDTO.idAfiliado() + " no existe"));
             beneficiario.setAfliliadoORM(afiliado);
         }
 

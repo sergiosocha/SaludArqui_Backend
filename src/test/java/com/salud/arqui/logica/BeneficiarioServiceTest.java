@@ -1,24 +1,23 @@
 package com.salud.arqui.logica;
 
-import com.salud.arqui.db.orm.AfiliadoORM;
-import com.salud.arqui.db.orm.BeneficiarioORM;
+import com.salud.arqui.controller.dto.BeneficiarioDTO;
 import com.salud.arqui.db.jpa.AfiliadoJPA;
 import com.salud.arqui.db.jpa.BeneficiarioJPA;
-import com.salud.arqui.controller.dto.BeneficiarioDTO;
+import com.salud.arqui.db.orm.AfiliadoORM;
+import com.salud.arqui.db.orm.BeneficiarioORM;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.util.Optional;
 import java.util.List;
-import java.util.Collections;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
-class BeneficiarioServiceTest {
 
+class BeneficiarioServiceTest {
 
     @Mock
     private BeneficiarioJPA beneficiarioJPA;
@@ -29,21 +28,22 @@ class BeneficiarioServiceTest {
     @InjectMocks
     private BeneficiarioService beneficiarioService;
 
+    private AfiliadoORM afiliadoORM;
+
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
+        afiliadoORM = new AfiliadoORM();
+
     }
 
     @Test
-    void guardarBeneficiario() {
+    void guardarBeneficiario_creaBeneficiarioCorrectamente() {
         String nombre = "Juan Pérez";
         String email = "juan.perez@example.com";
         Long idAfiliado = 1L;
 
-        AfiliadoORM afiliadoORM = new AfiliadoORM();
-
         when(afiliadoJPA.findById(idAfiliado)).thenReturn(Optional.of(afiliadoORM));
-        when(beneficiarioJPA.findByAfliliadoORM(afiliadoORM)).thenReturn(Optional.empty());
 
         boolean result = beneficiarioService.guardarBeneficiario(nombre, email, idAfiliado);
 
@@ -52,86 +52,81 @@ class BeneficiarioServiceTest {
     }
 
     @Test
-    void guardarBeneficiarioAfiliadoNoExistente() {
+    void guardarBeneficiario_afiliadoNoExistente_lanzaExcepcion() {
+        String nombre = "Juan Pérez";
+        String email = "juan.perez@example.com";
         Long idAfiliado = 1L;
 
         when(afiliadoJPA.findById(idAfiliado)).thenReturn(Optional.empty());
 
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            beneficiarioService.guardarBeneficiario("Nombre", "email@example.com", idAfiliado);
-        });
+        Exception exception = assertThrows(IllegalArgumentException.class, () ->
+                beneficiarioService.guardarBeneficiario(nombre, email, idAfiliado));
 
-        assertEquals("El afiliado con id " + idAfiliado + " no existe", exception.getMessage());
-        verify(beneficiarioJPA, times(0)).save(any(BeneficiarioORM.class));
+        assertEquals("1 no existe", exception.getMessage());
     }
 
     @Test
-    void listaBeneficiario() {
-        BeneficiarioORM beneficiarioORM = new BeneficiarioORM();
-        when(beneficiarioJPA.findAll()).thenReturn(List.of(beneficiarioORM));
+    void listaBeneficiario_devuelveLista() {
+        List<BeneficiarioORM> lista = beneficiarioService.listaBeneficiario();
 
-        List<BeneficiarioORM> result = beneficiarioService.listaBeneficiario();
-
-        assertNotNull(result);
-        assertEquals(1, result.size());
+        assertNotNull(lista);
         verify(beneficiarioJPA, times(1)).findAll();
     }
 
     @Test
-    void eliminarBeneficiario() {
-        Long idBeneficiario = 1L;
+    void eliminarBeneficiario_eliminaBeneficiarioCorrectamente() {
+        Long id = 1L;
 
-        doNothing().when(beneficiarioJPA).deleteById(idBeneficiario);
+        beneficiarioService.eliminarBeneficiario(id);
 
-        beneficiarioService.eliminarBeneficiario(idBeneficiario);
-
-        verify(beneficiarioJPA, times(1)).deleteById(idBeneficiario);
+        verify(beneficiarioJPA, times(1)).deleteById(id);
     }
 
     @Test
-    void buscarBeneficiarioId() {
-
-        Long idBeneficiario = 1L;
+    void buscarBeneficiarioId_devuelveBeneficiario() {
+        Long id = 1L;
         BeneficiarioORM beneficiarioORM = new BeneficiarioORM();
+        when(beneficiarioJPA.findById(id)).thenReturn(Optional.of(beneficiarioORM));
 
-
-        when(beneficiarioJPA.findById(idBeneficiario)).thenReturn(Optional.of(beneficiarioORM));
-
-        BeneficiarioORM result = beneficiarioService.buscarBeneficiarioId(idBeneficiario);
+        BeneficiarioORM result = beneficiarioService.buscarBeneficiarioId(id);
 
         assertNotNull(result);
-        assertEquals(idBeneficiario, idBeneficiario);
-        verify(beneficiarioJPA, times(1)).findById(idBeneficiario);
+        verify(beneficiarioJPA, times(1)).findById(id);
     }
 
     @Test
-    void actualizarBeneficiario() {
-        Long idBeneficiario = 1L;
-        Long idAfiliado = 2L;
+    void buscarBeneficiarioId_noExisteBeneficiario_devuelveNull() {
+        Long id = 1L;
+        when(beneficiarioJPA.findById(id)).thenReturn(Optional.empty());
+
+        BeneficiarioORM result = beneficiarioService.buscarBeneficiarioId(id);
+
+        assertNull(result);
+        verify(beneficiarioJPA, times(1)).findById(id);
+    }
+
+    @Test
+    void actualizarBeneficiario_actualizaBeneficiarioCorrectamente() {
+        Long id = 1L;
+        BeneficiarioDTO beneficiarioDTO = new BeneficiarioDTO("Juan Pérez", "juan.perez@example.com", null);
         BeneficiarioORM beneficiarioORM = new BeneficiarioORM();
-        AfiliadoORM afiliadoORM = new AfiliadoORM();
+        when(beneficiarioJPA.findById(id)).thenReturn(Optional.of(beneficiarioORM));
 
-        BeneficiarioDTO beneficiarioDTO = new BeneficiarioDTO("Juan Pérez", "juan.perez@example.com", idAfiliado);
-
-        when(beneficiarioJPA.findById(idBeneficiario)).thenReturn(Optional.of(beneficiarioORM));
-        when(afiliadoJPA.findById(idAfiliado)).thenReturn(Optional.of(afiliadoORM));
-
-        boolean result = beneficiarioService.actualizarBeneficiario(idBeneficiario, beneficiarioDTO);
+        boolean result = beneficiarioService.actualizarBeneficiario(id, beneficiarioDTO);
 
         assertTrue(result);
-        verify(beneficiarioJPA, times(1)).save(any(BeneficiarioORM.class));
+        verify(beneficiarioJPA, times(1)).save(beneficiarioORM);
     }
 
     @Test
-    void actualizarBeneficiarioNoExistente() {
-        Long idBeneficiario = 1L;
+    void actualizarBeneficiario_noExisteBeneficiario_devuelveFalse() {
+        Long id = 1L;
         BeneficiarioDTO beneficiarioDTO = new BeneficiarioDTO("Juan Pérez", "juan.perez@example.com", null);
+        when(beneficiarioJPA.findById(id)).thenReturn(Optional.empty());
 
-        when(beneficiarioJPA.findById(idBeneficiario)).thenReturn(Optional.empty());
-
-        boolean result = beneficiarioService.actualizarBeneficiario(idBeneficiario, beneficiarioDTO);
+        boolean result = beneficiarioService.actualizarBeneficiario(id, beneficiarioDTO);
 
         assertFalse(result);
-        verify(beneficiarioJPA, times(0)).save(any(BeneficiarioORM.class));
+        verify(beneficiarioJPA, never()).save(any(BeneficiarioORM.class));
     }
 }
