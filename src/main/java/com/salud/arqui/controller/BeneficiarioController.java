@@ -2,13 +2,11 @@ package com.salud.arqui.controller;
 
 
 import com.salud.arqui.controller.dto.BeneficiarioDTO;
-import com.salud.arqui.db.orm.AfiliadoORM;
 import com.salud.arqui.db.orm.BeneficiarioORM;
-import com.salud.arqui.logica.AfiliadoService;
 import com.salud.arqui.logica.BeneficiarioService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

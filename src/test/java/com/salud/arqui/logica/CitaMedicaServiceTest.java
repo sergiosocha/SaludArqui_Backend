@@ -15,6 +15,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -36,6 +37,9 @@ class CitaMedicaServiceTest {
     @Mock
     private HistorialMedicoJPA historialMedicoJPA;
 
+    @Mock
+    private HistorialMedicoORM historialMedico;
+
     @InjectMocks
     private CitaMedicaService citaMedicaService;
 
@@ -46,7 +50,6 @@ class CitaMedicaServiceTest {
 
     @Test
     void guardarCitaMedica() {
-
         Long idAfiliado = 1L;
         Long idBeneficiario = 2L;
         Long idHistorialMedico = 3L;
@@ -56,15 +59,21 @@ class CitaMedicaServiceTest {
 
         AfiliadoORM afiliado = new AfiliadoORM();
         BeneficiarioORM beneficiario = new BeneficiarioORM();
-        HistorialMedicoORM historialMedico = new HistorialMedicoORM();
 
+
+        when(historialMedicoJPA.findById(idHistorialMedico)).thenReturn(Optional.of(historialMedico));
         when(afiliadoJPA.findById(idAfiliado)).thenReturn(Optional.of(afiliado));
         when(beneficiarioJPA.findById(idBeneficiario)).thenReturn(Optional.of(beneficiario));
-        when(historialMedicoJPA.findById(idHistorialMedico)).thenReturn(Optional.of(historialMedico));
 
+        List<CitaMedicaORM> citasMedicas = new ArrayList<>();
+
+        when(historialMedico.getCitasMedicas()).thenReturn(citasMedicas);
+
+        // Ejecuta el método
         boolean resultado = citaMedicaService.guardarCitaMedica(tipoDeCita, descripcion, fechaConsulta, idAfiliado, idBeneficiario, idHistorialMedico);
 
         assertTrue(resultado);
+
         verify(citaMedicaJPA, times(1)).save(any(CitaMedicaORM.class));
         verify(historialMedicoJPA, times(1)).save(historialMedico);
     }

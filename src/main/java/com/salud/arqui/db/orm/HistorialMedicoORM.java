@@ -1,20 +1,18 @@
 package com.salud.arqui.db.orm;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
+
 import java.util.List;
 
 @Table(name = "historialMedico")
 @Entity
 @Data
 @NoArgsConstructor
-//@JsonIgnoreProperties({"citasMedicas"})
 public class HistorialMedicoORM {
 
     @Id
