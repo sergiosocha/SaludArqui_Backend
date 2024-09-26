@@ -35,4 +35,4 @@ JavaSpring para desarrollar el Back
 ## Diagrama de paquetes
 
 
-![diagramaDePaquetes](./src/main/java/com/salud/arqui/diagrama/DiagramaDePaquetes.png)
+![diagramaDePaquetes]()
