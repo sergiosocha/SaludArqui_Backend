@@ -2,7 +2,8 @@ pipeline {
     agent any
 
     stages {
-        stage('Checkout') {
+        stage('Checkout')
+        {
             steps {
                 git branch: 'Develop', url: 'https://github.com/sergiosocha/SaludArqui_Backend.git'
             }
