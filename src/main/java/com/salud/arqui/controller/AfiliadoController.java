@@ -7,12 +7,17 @@ import com.salud.arqui.logica.AfiliadoService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import lombok.extern.slf4j.Slf4j;
 import java.util.ArrayList;
 import java.util.List;
 
+
+
+
+
 @RestController
 @AllArgsConstructor
+@Slf4j
 public class AfiliadoController {
 
     private AfiliadoService afiliadoService;
@@ -40,10 +45,28 @@ public class AfiliadoController {
     public ResponseEntity<AfiliadoORM> obtenerAfiliadoId(@PathVariable Long id){
         AfiliadoORM afiliado = afiliadoService.buscarAfiliadoId(id);
         if(afiliado == null)
-            System.out.println("No se encontro el afiliado Solicitado con id: " + id)
+            log.info("No se encontro el afiliado Solicitado con id: " + id)
                     ;
         return ResponseEntity.ok(afiliado);
 
+    }
+
+    @PutMapping(path = "/afiliado/{id}")
+    public ResponseEntity<AfiliadoORM> actualizarAfiliado(@PathVariable Long id, @RequestBody AfiliadoORM afiliadoORMRecibido) {
+        AfiliadoORM afiliadoExistente = afiliadoService.buscarAfiliadoId(id);
+        if (afiliadoExistente == null) {
+            return ResponseEntity.notFound().build();
+        }
+        String nombre = afiliadoORMRecibido.getNombre();
+        Integer edad = afiliadoORMRecibido.getEdad();
+        String email = afiliadoORMRecibido.getEmail();
+        String genero = afiliadoORMRecibido.getGenero();
+
+        afiliadoService.actualizarAfiliado(id, nombre, edad, email, genero);
+
+        AfiliadoORM afiliadoActualizado = afiliadoService.buscarAfiliadoId(id);
+
+        return ResponseEntity.ok(afiliadoActualizado);
     }
 
 

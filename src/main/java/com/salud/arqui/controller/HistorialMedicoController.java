@@ -1,37 +1,36 @@
 package com.salud.arqui.controller;
 
 
-import com.salud.arqui.controller.dto.HistorialMedicoDTO;
+import com.salud.arqui.db.orm.HistorialMedicoORM;
 import com.salud.arqui.logica.HistorialMedicoService;
+import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
 
 
 @RestController
-
+@AllArgsConstructor
 public class HistorialMedicoController {
+    private final HistorialMedicoService historialMedicoService;
 
-    private HistorialMedicoService historialMedicoService;
-
-    List<HistorialMedicoDTO> HistorialMedico = new ArrayList<>();
-
-    @PostMapping(path= "/HistorialMedico")
-    public String guardarHistorialMedico(@RequestBody HistorialMedicoDTO historialMedicoDTO) {
-        historialMedicoService.guardarHistorialMedica(historialMedicoDTO.tipoConsulta(), historialMedicoDTO.detalle());
-        return "Historial medico guardado";
+    @GetMapping(path = "/historialMedico/afiliado/{idAfiliado}")
+    public ResponseEntity<HistorialMedicoORM> obtenerHistorialMedicoPorAfiliado(@PathVariable long idAfiliado) {
+        HistorialMedicoORM historial = historialMedicoService.buscarHistorialMedicoPorAfiliado(idAfiliado);
+        if (historial == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(historial);
     }
 
-    @GetMapping(path = "/historialMedico")
-    public List<HistorialMedicoDTO> obtenerHistorialMedico() {
-        return HistorialMedico;
+    @GetMapping(path = "/historialMedico/beneficiario/{idBeneficiario}")
+    public ResponseEntity<HistorialMedicoORM> obtenerHistorialMedicoPorBeneficiario(@PathVariable long idBeneficiario) {
+        HistorialMedicoORM historial = historialMedicoService.buscarHistorialMedicoPorBeneficiario(idBeneficiario);
+        if (historial == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(historial);
     }
-
-    /*@DeleteMapping(path = "/citaMedica/{id}")
-    public String eliminarHistorialMedico(@PathVariable Long id) {
-        historialMedicoService.eliminarHistorialMedico(id);
-        return "Historial medico eliminado";
-    }*/
 
 }
+
