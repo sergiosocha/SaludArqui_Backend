@@ -1,10 +1,6 @@
 pipeline {
     agent any
 
-    tools {
-            sonarQube 'sonarquebe1'
-        }
-
     stages {
         stage('Checkout')
         {
@@ -29,10 +25,14 @@ pipeline {
         stage('SonarQube Analysis')
         {
             steps {
-                withSonarQubeEnv('sonarquebe1')
-                {
-                    sh './gradlew sonarqube'
+                script{
+
+                    withSonarQubeEnv('sonarquebe1'){
+                        sh './gradlew sonarqube'
+                    }
+
                 }
+
             }
         }
 
