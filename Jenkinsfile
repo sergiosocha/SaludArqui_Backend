@@ -40,8 +40,8 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 script {
-                    withCredentials([string(credentialsId: 'DOCKER_PASSWORD', variable: 'DOCKER_PASSWORD')]) {
-                        sh "docker login -u sergioss21 -p $DOCKER_PASSWORD"
+                    withCredentials([usernamePassword(credentialsId: 'DockerHub', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASSWORD')]) {
+                        sh "docker login -u $DOCKER_USER -p $DOCKER_PASSWORD"
                         sh 'docker push sergioss21/spring-api'
                     }
                 }
