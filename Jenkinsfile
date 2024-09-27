@@ -1,8 +1,10 @@
 pipeline {
     agent any
 
+
     stages {
-        stage('Checkout') {
+        stage('Checkout')
+        {
             steps {
                 git branch: 'Develop', url: 'https://github.com/sergiosocha/SaludArqui_Backend.git'
             }
@@ -21,9 +23,11 @@ pipeline {
             }
         }
 
-        stage('SonarQube Analysis') {
+        stage('SonarQube Analysis')
+        {
             steps {
-                withSonarQubeEnv('SonarQube') {
+                withSonarQubeEnv('SonarQube')
+                {
                     sh './gradlew sonarqube'
                 }
             }
