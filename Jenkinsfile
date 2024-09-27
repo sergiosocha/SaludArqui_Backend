@@ -1,10 +1,8 @@
 pipeline {
     agent any
 
-
     stages {
-        stage('Checkout')
-        {
+        stage('Checkout') {
             steps {
                 git branch: 'Develop', url: 'https://github.com/sergiosocha/SaludArqui_Backend.git'
             }
@@ -12,8 +10,8 @@ pipeline {
 
         stage('Build') {
             steps {
-                     sh 'chmod +x ./gradlew'
-                    sh './gradlew clean build'
+                sh 'chmod +x ./gradlew'
+                sh './gradlew clean build'
             }
         }
 
@@ -23,11 +21,9 @@ pipeline {
             }
         }
 
-        stage('SonarQube Analysis')
-        {
+        stage('SonarQube Analysis') {
             steps {
-                withSonarQubeEnv('SonarQube')
-                {
+                withSonarQubeEnv('SonarQube') {
                     sh './gradlew sonarqube'
                 }
             }
@@ -44,7 +40,14 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 script {
+                    // Iniciar sesión en Docker Hub usando las variables de entorno
+                    sh 'echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin'
+
+                    // Hacer push de la imagen
                     sh 'docker push sergioss21/spring-api'
+
+                    // Cerrar sesión de Docker
+                    sh 'docker logout'
                 }
             }
         }
