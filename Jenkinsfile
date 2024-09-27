@@ -23,11 +23,8 @@ pipeline {
 
         stage('SonarQube Analysis') {
             steps {
-                script {
-
-                    withSonarQubeEnv('sonarquebe1') {
-                        sh './gradlew sonar' '
-                    }
+                withSonarQubeEnv('SonarQube') {
+                    sh './gradlew sonarqube'
                 }
             }
         }
@@ -43,7 +40,14 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 script {
+
+                    sh 'echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin'
+
+
                     sh 'docker push sergioss21/spring-api'
+
+
+                    sh 'docker logout'
                 }
             }
         }
@@ -51,16 +55,7 @@ pipeline {
 
     post {
         always {
-            // Opcional: Limpiar el workspace tras la ejecución
             cleanWs()
-        }
-
-        failure {
-            echo 'Build failed!'
-        }
-
-        success {
-            echo 'Build succeeded!'
         }
     }
 }
