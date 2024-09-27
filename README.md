@@ -25,4 +25,14 @@ Integrantes:
 
 ## URL Proyecto 
 
+Informacion Desarrollo: 
+React  para desarrollar el Front
+JavaSpring para desarrollar el Back
+
+
+### https://sebastianpicas.github.io/SaludArqui_Front/
+
 ## Diagrama de paquetes
+
+
+![diagramaDePaquetes]()

@@ -36,13 +36,15 @@ public class CitaMedicaController {
                 afiliado = afiliadoJPA.findById(request.idAfiliado()).orElseThrow(() ->
                         new IllegalArgumentException("El ID del afiliado no existe."));
             }
-                BeneficiarioORM beneficiario = null;
+
+            BeneficiarioORM beneficiario = null;
             if (request.idBeneficiario() != null) {
                 beneficiario = beneficiarioJPA.findById(request.idBeneficiario()).orElseThrow(() ->
                         new IllegalArgumentException("El ID del beneficiario no existe o ya está asignado a otro afiliado."));
             }
 
-             HistorialMedicoORM historialMedico = null;
+
+            HistorialMedicoORM historialMedico = null;
             if (afiliado != null) {
                 historialMedico = historialMedicoJPA.findByAfiliadoORM_idAfiliado(request.idAfiliado())
                         .orElseThrow(() -> new IllegalArgumentException("No se encontró el historial médico para el afiliado con ID: " + request.idAfiliado()));

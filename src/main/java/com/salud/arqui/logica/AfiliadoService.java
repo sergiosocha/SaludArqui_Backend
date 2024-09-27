@@ -54,6 +54,7 @@ public class AfiliadoService {
 
         if (afiliadoExistente.isEmpty()) {
            log.info("El afiliado con id " + id + " no existe");
+           return false;
         }
 
         AfiliadoORM afiliado = afiliadoExistente.get();
