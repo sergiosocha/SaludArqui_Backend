@@ -40,13 +40,12 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 script {
-                    // Iniciar sesión en Docker Hub usando las variables de entorno
-                    sh 'echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin'
+                    
+                    sh 'docker login -u $DOCKER_USER -p $DOCKER_PASSWORD'
 
-                    // Hacer push de la imagen
+                    
                     sh 'docker push sergioss21/spring-api'
 
-                    // Cerrar sesión de Docker
                     sh 'docker logout'
                 }
             }
