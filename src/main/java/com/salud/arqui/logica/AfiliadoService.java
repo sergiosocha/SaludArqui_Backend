@@ -45,7 +45,8 @@ public class AfiliadoService {
         afiliadoJPA.deleteById(id);
     }
 
-    public AfiliadoORM buscarAfiliadoId(Long id){
+    public AfiliadoORM buscarAfiliadoId(Long id)
+    {
         return afiliadoJPA.findById(id).orElse(null);
     }
 
