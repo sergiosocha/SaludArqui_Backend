@@ -37,7 +37,8 @@ public class AfiliadoService {
     }
 
 
-    public List<AfiliadoORM> listaAfiliados(){
+    public List<AfiliadoORM> listaAfiliados()
+    {
         return afiliadoJPA.findAll();
     }
 
@@ -67,11 +68,4 @@ public class AfiliadoService {
 
         return true;
     }
-
-
-
-
-
-
-
 }
