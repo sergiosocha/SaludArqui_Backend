@@ -30,22 +30,19 @@ public class CitaMedicaController {
     @PostMapping("/citaMedica")
     public ResponseEntity<String> guardarCitaMedica(@RequestBody CitaMedicaDTO request) {
         try {
-            // Validar afiliado si está presente
+
             AfiliadoORM afiliado = null;
             if (request.idAfiliado() != null) {
                 afiliado = afiliadoJPA.findById(request.idAfiliado()).orElseThrow(() ->
                         new IllegalArgumentException("El ID del afiliado no existe."));
             }
-
-            // Validar beneficiario si está presente
-            BeneficiarioORM beneficiario = null;
+                BeneficiarioORM beneficiario = null;
             if (request.idBeneficiario() != null) {
                 beneficiario = beneficiarioJPA.findById(request.idBeneficiario()).orElseThrow(() ->
                         new IllegalArgumentException("El ID del beneficiario no existe o ya está asignado a otro afiliado."));
             }
 
-            // Determinar el historial médico en función de la presencia de afiliado o beneficiario
-            HistorialMedicoORM historialMedico = null;
+             HistorialMedicoORM historialMedico = null;
             if (afiliado != null) {
                 historialMedico = historialMedicoJPA.findByAfiliadoORM_idAfiliado(request.idAfiliado())
                         .orElseThrow(() -> new IllegalArgumentException("No se encontró el historial médico para el afiliado con ID: " + request.idAfiliado()));
