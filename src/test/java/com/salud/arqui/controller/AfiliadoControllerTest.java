@@ -124,4 +124,24 @@ class AfiliadoControllerTest {
         // Verificar que el método save nunca fue llamado
         verify(afiliadoJPA, never()).save(any(AfiliadoORM.class));
     }
+
+    @Test
+    void guardarAfiliado() {
+    }
+
+    @Test
+    void obtenerAfiliados() {
+    }
+
+    @Test
+    void eliminarAfiliado() {
+    }
+
+    @Test
+    void obtenerAfiliadoId() {
+    }
+
+    @Test
+    void actualizarAfiliado() {
+    }
 }

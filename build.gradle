@@ -13,9 +13,19 @@ sonarqube {
 	}
 }
 
+/*jacocoTestReport {
+	afterEvaluate {
+		classDirectories.setFrom(files(
+				fileTree(dir: "$buildDir/classes/java/main") {
+					exclude 'com/salud/arqui/db/orm/**'
+					exclude 'com/salud/arqui/controller/dto/**'
+				}
+		))
+	}
+}*/
 
-
-check.dependsOn jacocoTestReport
+tasks.check.dependsOn jacocoTestReport
+tasks.check.dependsOn jacocoTestCoverageVerification
 
 
 group = 'com.salud'
@@ -51,13 +61,13 @@ dependencies {
 	implementation 'org.json:json:20230227'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	implementation 'mysql:mysql-connector-java:8.0.33'
 	testImplementation "org.mockito:mockito-core:3.+"
+	runtimeOnly 'com.h2database:h2'
 
 }
 
