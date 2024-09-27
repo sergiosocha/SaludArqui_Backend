@@ -26,7 +26,7 @@ pipeline {
                 script {
 
                     withSonarQubeEnv('sonarquebe1') {
-                        sh './gradlew sonar' '
+                        sh './gradlew sonar'
                     }
                 }
             }
