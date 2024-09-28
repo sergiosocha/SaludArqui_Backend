@@ -28,7 +28,6 @@ public class AfiliadoService {
         nuevoAfiliado.setGenero(genero);
         afiliadoJPA.save(nuevoAfiliado);
 
-        // Crear HistorialMedico asociado
         HistorialMedicoORM nuevoHistorial = new HistorialMedicoORM();
         nuevoHistorial.setAfiliadoORM(nuevoAfiliado);
         historialMedicoJPA.save(nuevoHistorial);

@@ -40,8 +40,10 @@ public class BeneficiarioController {
     @GetMapping(path = "beneficiario/{id}")
     public ResponseEntity<BeneficiarioORM> obtenerBeneficiarioId(@PathVariable Long id){
         BeneficiarioORM beneficiario = beneficiarioService.buscarBeneficiarioId(id);
-        if(beneficiario == null)
+        if(beneficiario == null) {
             log.info("No se encontro el beneficiario Solicitado con id: " + id);
+            return ResponseEntity.notFound().build();
+        }
         return ResponseEntity.ok(beneficiario);
     }
 

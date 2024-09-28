@@ -44,11 +44,11 @@ public class HistorialMedicoService {
 
     public HistorialMedicoORM buscarHistorialMedicoPorAfiliado(Long idAfiliado) {
         return historialMedicoJPA.findByAfiliadoORM_idAfiliado(idAfiliado)
-                .orElseThrow(() -> new IllegalArgumentException("No se encontró el historial médico para el afiliado con ID: " + idAfiliado));
+                .orElse(null); // Cambia la excepción por null
     }
 
     public HistorialMedicoORM buscarHistorialMedicoPorBeneficiario(Long idBeneficiario) {
         return historialMedicoJPA.findByBeneficiarioORM_idBeneficiario(idBeneficiario)
-                .orElseThrow(() -> new IllegalArgumentException("No se encontró el historial médico para el beneficiario con ID: " + idBeneficiario));
+                .orElse(null); // Cambia la excepción por null
     }
 }
