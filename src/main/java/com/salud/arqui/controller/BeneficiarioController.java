@@ -40,17 +40,15 @@ public class BeneficiarioController {
     @GetMapping(path = "beneficiario/{id}")
     public ResponseEntity<BeneficiarioORM> obtenerBeneficiarioId(@PathVariable Long id){
         BeneficiarioORM beneficiario = beneficiarioService.buscarBeneficiarioId(id);
-        if(beneficiario == null)
+        if(beneficiario == null) {
             log.info("No se encontro el beneficiario Solicitado con id: " + id);
+            return ResponseEntity.notFound().build();
+        }
         return ResponseEntity.ok(beneficiario);
     }
 
     @PutMapping(path = "/beneficiario/{id}")
     public ResponseEntity<BeneficiarioORM> actualizarBeneficiario( @PathVariable Long id, @RequestBody BeneficiarioDTO beneficiarioDTO) {
-
-        if (id == null) {
-            return ResponseEntity.badRequest().build();
-        }
 
         boolean actualizado = beneficiarioService.actualizarBeneficiario(id, beneficiarioDTO);
 

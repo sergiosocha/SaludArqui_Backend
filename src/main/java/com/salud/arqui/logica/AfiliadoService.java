@@ -29,7 +29,6 @@ public class AfiliadoService {
         nuevoAfiliado.setGenero(genero);
         afiliadoJPA.save(nuevoAfiliado);
 
-        // Crear HistorialMedico asociado
         HistorialMedicoORM nuevoHistorial = new HistorialMedicoORM();
         nuevoHistorial.setAfiliadoORM(nuevoAfiliado);
         historialMedicoJPA.save(nuevoHistorial);
@@ -45,6 +44,7 @@ public class AfiliadoService {
 
     public void eliminarAfiliado(Long id){
         afiliadoJPA.deleteById(id);
+
     }
 
     public AfiliadoORM buscarAfiliadoId(Long id)

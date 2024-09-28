@@ -13,9 +13,28 @@ sonarqube {
 	}
 }
 
+jacocoTestReport {
+	reports {
+		xml.required = true
+		html.required = true
+	}
+}
+
+jacocoTestCoverageVerification {
+	violationRules {
+		rule {
+			limit {
+				minimum = 0.90
+			}
+		}
+	}
+}
 
 
-check.dependsOn jacocoTestReport
+
+
+
+check.dependsOn jacocoTestCoverageVerification
 
 
 group = 'com.salud'
@@ -58,6 +77,11 @@ dependencies {
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	implementation 'mysql:mysql-connector-java:8.0.33'
 	testImplementation "org.mockito:mockito-core:3.+"
+
+	testImplementation 'com.h2database:h2:2.2.222'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.junit.platform:junit-platform-launcher'
+
 
 }
 
