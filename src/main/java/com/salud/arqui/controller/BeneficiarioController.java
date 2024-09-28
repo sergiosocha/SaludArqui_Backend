@@ -50,10 +50,6 @@ public class BeneficiarioController {
     @PutMapping(path = "/beneficiario/{id}")
     public ResponseEntity<BeneficiarioORM> actualizarBeneficiario( @PathVariable Long id, @RequestBody BeneficiarioDTO beneficiarioDTO) {
 
-        if (id == null) {
-            return ResponseEntity.badRequest().build();
-        }
-
         boolean actualizado = beneficiarioService.actualizarBeneficiario(id, beneficiarioDTO);
 
         if (!actualizado) {

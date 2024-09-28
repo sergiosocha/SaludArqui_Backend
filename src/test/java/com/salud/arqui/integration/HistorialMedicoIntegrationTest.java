@@ -16,6 +16,8 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 
+import java.util.List;
+
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles(profiles = "h2")
 public class HistorialMedicoIntegrationTest {
@@ -49,7 +51,6 @@ public class HistorialMedicoIntegrationTest {
 
         Assertions.assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
-
 
 
     @Test

@@ -42,6 +42,7 @@ public class AfiliadoService {
 
     public void eliminarAfiliado(Long id){
         afiliadoJPA.deleteById(id);
+
     }
 
     public AfiliadoORM buscarAfiliadoId(Long id){

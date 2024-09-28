@@ -5,6 +5,7 @@ import com.salud.arqui.controller.dto.AfiliadoDTO;
 import com.salud.arqui.db.orm.AfiliadoORM;
 import com.salud.arqui.logica.AfiliadoService;
 import lombok.AllArgsConstructor;
+import org.hibernate.query.NativeQuery;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import lombok.extern.slf4j.Slf4j;
@@ -44,9 +45,9 @@ public class AfiliadoController {
     @GetMapping(path = "/afiliado/{id}")
     public ResponseEntity<AfiliadoORM> obtenerAfiliadoId(@PathVariable Long id){
         AfiliadoORM afiliado = afiliadoService.buscarAfiliadoId(id);
-        if(afiliado == null)
-            log.info("No se encontro el afiliado Solicitado con id: " + id)
-                    ;
+        if(afiliado == null) {
+            return ResponseEntity.notFound().build();
+        }
         return ResponseEntity.ok(afiliado);
 
     }

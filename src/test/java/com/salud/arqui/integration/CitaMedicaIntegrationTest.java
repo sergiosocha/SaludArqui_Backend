@@ -51,7 +51,6 @@ public class CitaMedicaIntegrationTest {
         historial.setAfiliadoORM(afiliado);
         historialMedicoJPA.save(historial);
 
-
         CitaMedicaDTO citaMedicaDTO = new CitaMedicaDTO(
                 "General", "Revisión anual", "2024-09-28", afiliado.getIdAfiliado(), null
         );
@@ -61,7 +60,6 @@ public class CitaMedicaIntegrationTest {
                 "/citaMedica", citaMedicaDTO, String.class
         );
 
-
         Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
         Assertions.assertEquals("Cita médica guardada exitosamente.", response.getBody());
     }
@@ -69,15 +67,8 @@ public class CitaMedicaIntegrationTest {
 
     @Test
     public void  When_guardarCitaMedicaAfiliadoNoExistente_Then_returnBadRequest() {
-
-        CitaMedicaDTO citaMedicaDTO = new CitaMedicaDTO(
-                "General", "Revisión anual", "2024-09-28", 999L, null
-        );
-
-
-        ResponseEntity<String> response = testRestTemplate.postForEntity(
-                "/citaMedica", citaMedicaDTO, String.class
-        );
+        CitaMedicaDTO citaMedicaDTO = new CitaMedicaDTO("General", "Revisión anual", "2024-09-28", 999L, null);
+        ResponseEntity<String> response = testRestTemplate.postForEntity("/citaMedica", citaMedicaDTO, String.class);
 
         Assertions.assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         Assertions.assertEquals("El ID del afiliado no existe.", response.getBody());
@@ -104,8 +95,8 @@ public class CitaMedicaIntegrationTest {
 
     @Test
     @Transactional
-    public void testGuardarCitaMedicaBeneficiarioAsociadoAOtroAfiliado() {
-           AfiliadoDTO afiliadoInicial = new AfiliadoDTO("Juan Lopez", 40, "juan@mail.com", "M");
+    public void when_GuardarCitaMedicaBeneficiario() {
+        AfiliadoDTO afiliadoInicial = new AfiliadoDTO("Juan Lopez", 40, "juan@mail.com", "M");
         ResponseEntity<String> responseAfiliado = testRestTemplate.postForEntity("/afiliado", afiliadoInicial, String.class);
 
 
@@ -115,15 +106,25 @@ public class CitaMedicaIntegrationTest {
         AfiliadoORM afiliado1 = afiliadoJPA.findById(1L)
                 .orElseThrow(() -> new IllegalArgumentException("Afiliado no encontrado"));
 
+        AfiliadoDTO afiliado2 = new AfiliadoDTO("Juan Lopez", 40, "juan@mail.com", "M");
+        ResponseEntity<String> responseAfiliado2 = testRestTemplate.postForEntity("/afiliado", afiliado2, String.class);
+
+
+        Assertions.assertEquals(HttpStatus.OK, responseAfiliado2.getStatusCode());
+
+
+        AfiliadoORM afiliados2 = afiliadoJPA.findById(2L)
+                .orElseThrow(() -> new IllegalArgumentException("Afiliado no encontrado"));
+
 
         BeneficiarioORM beneficiario = new BeneficiarioORM();
         beneficiario.setNombre("Maria Gomez");
-        beneficiario.setAfliliadoORM(afiliado1);
+        beneficiario.setAfliliadoORM(afiliados2);
         beneficiario = beneficiarioJPA.save(beneficiario);
 
 
         HistorialMedicoORM historial = new HistorialMedicoORM();
-        historial.setAfiliadoORM(afiliado1);
+        historial.setAfiliadoORM(afiliados2);
         historialMedicoJPA.save(historial);
 
 

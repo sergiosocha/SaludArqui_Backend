@@ -23,10 +23,6 @@ public class BeneficiarioService {
 
     public boolean guardarBeneficiario(String nombre, String email, Long idAfiliado) {
 
-        if (idAfiliado == null) {
-            log.info("El ID del afiliado no puede ser nulo.");
-        }
-
         Optional<AfiliadoORM> afiliadoVerify = afiliadoJPA.findById(idAfiliado);
 
         if (afiliadoVerify.isEmpty()) {
@@ -63,9 +59,6 @@ public class BeneficiarioService {
     }
 
     public boolean actualizarBeneficiario(Long id, BeneficiarioDTO beneficiarioDTO) {
-        if (id == null) {
-            log.info("El ID del beneficiario no puede ser nulo");
-        }
 
         Optional<BeneficiarioORM> beneficiarioExistente = beneficiarioJPA.findById(id);
 
