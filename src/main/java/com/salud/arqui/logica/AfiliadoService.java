@@ -20,7 +20,8 @@ public class AfiliadoService {
     private final AfiliadoJPA afiliadoJPA;
     private final HistorialMedicoJPA historialMedicoJPA;
 
-    public boolean guardarAfiliado(String nombre, Integer edad, String email, String genero){
+    public boolean guardarAfiliado(String nombre, Integer edad, String email, String genero)
+    {
         AfiliadoORM nuevoAfiliado = new AfiliadoORM();
         nuevoAfiliado.setNombre(nombre);
         nuevoAfiliado.setEdad(edad);
