@@ -23,6 +23,8 @@ public class BeneficiarioService {
 
     public boolean guardarBeneficiario(String nombre, String email, Long idAfiliado) {
 
+
+
         Optional<AfiliadoORM> afiliadoVerify = afiliadoJPA.findById(idAfiliado);
 
         if (afiliadoVerify.isEmpty()) {
@@ -73,7 +75,7 @@ public class BeneficiarioService {
 
         if (beneficiarioDTO.idAfiliado() != null) {
             AfiliadoORM afiliado = afiliadoJPA.findById(beneficiarioDTO.idAfiliado())
-                    .orElseThrow(() -> new IllegalArgumentException("El afiliado " + beneficiarioDTO.idAfiliado() + " no existe"));
+                    .orElse(null);
             beneficiario.setAfliliadoORM(afiliado);
         }
 
