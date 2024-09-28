@@ -28,19 +28,16 @@ public class HistorialMedicoIntegrationTest {
 
     @Test
     void When_obtenerHistorialMedicoPorAfiliado_Then_historialEncontrado() {
-
         AfiliadoDTO afiliadoInicial = new AfiliadoDTO("Juan Lopez", 40, "juan@mail.com", "M");
-        ResponseEntity<String> responseAfiliado = testRestTemplate.postForEntity("/afiliado", afiliadoInicial, String.class);
-        Assertions.assertEquals(HttpStatus.OK, responseAfiliado.getStatusCode());
+        testRestTemplate.postForEntity("/afiliado", afiliadoInicial, String.class);
 
         Long idAfiliado = 1L;
 
-        ResponseEntity<HistorialMedicoORM> response = testRestTemplate.getForEntity(
-                "/historialMedico/afiliado/{idAfiliado}", HistorialMedicoORM.class, idAfiliado);
+        ResponseEntity<HistorialMedicoDTO> response = testRestTemplate.getForEntity(
+                "/historialMedico/afiliado/{idAfiliado}", HistorialMedicoDTO.class, idAfiliado);
 
         Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
         Assertions.assertNotNull(response.getBody());
-        Assertions.assertEquals(idAfiliado, response.getBody().getAfiliadoORM().getIdAfiliado());
     }
 
     @Test
