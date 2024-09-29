@@ -22,7 +22,7 @@ import java.util.Objects;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles(profiles = "h2")
 @Transactional
-public class AfiliadoIntegrationTest {
+class AfiliadoIntegrationTest {
 
     @Autowired
     private TestRestTemplate testRestTemplate;

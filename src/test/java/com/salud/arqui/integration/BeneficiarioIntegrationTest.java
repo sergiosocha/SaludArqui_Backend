@@ -24,7 +24,7 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 @ActiveProfiles(profiles = "h2")
 @Transactional
-public class BeneficiarioIntegrationTest {
+class BeneficiarioIntegrationTest {
 
     @Autowired
     private TestRestTemplate testRestTemplate;
@@ -44,11 +44,11 @@ public class BeneficiarioIntegrationTest {
         Assertions.assertEquals(HttpStatus.OK, responseAfiliado.getStatusCode());
 
         AfiliadoDTO afiliado3 = new AfiliadoDTO("Juan Lopez", 40, "juan@mail.com", "M");
-        ResponseEntity<String> responseAfiliado3 = testRestTemplate.postForEntity("/afiliado", afiliadoInicial, String.class);
+        ResponseEntity<String> responseAfiliado3 = testRestTemplate.postForEntity("/afiliado", afiliado3, String.class);
         Assertions.assertEquals(HttpStatus.OK, responseAfiliado3.getStatusCode());
 
         AfiliadoDTO afiliado4 = new AfiliadoDTO("Juan Lopez", 40, "juan@mail.com", "M");
-        ResponseEntity<String> responseAfiliado4 = testRestTemplate.postForEntity("/afiliado", afiliadoInicial, String.class);
+        ResponseEntity<String> responseAfiliado4 = testRestTemplate.postForEntity("/afiliado", afiliado4, String.class);
         Assertions.assertEquals(HttpStatus.OK, responseAfiliado4.getStatusCode());
 
 
