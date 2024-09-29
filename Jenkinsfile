@@ -51,10 +51,11 @@ pipeline {
                    
                     sh 'echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin'
 
+                    sh 'docker login -u $DOCKER_USER -p $DOCKER_PASSWORD'
+
                     
                     sh 'docker push sergioss21/spring-api'
 
-                    
                     sh 'docker logout'
 
                     withCredentials([usernamePassword(credentialsId: 'DockerHub', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASSWORD')]) {
