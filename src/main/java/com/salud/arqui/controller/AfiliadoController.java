@@ -6,7 +6,6 @@ import com.salud.arqui.db.orm.AfiliadoORM;
 import com.salud.arqui.logica.AfiliadoService;
 import lombok.AllArgsConstructor;
 import org.hibernate.query.NativeQuery;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import lombok.extern.slf4j.Slf4j;
@@ -38,15 +37,9 @@ public class AfiliadoController {
     }
 
     @DeleteMapping(path = "/afiliado/{id}")
-    public ResponseEntity<String> eliminarAfiliado(@PathVariable Long id) {
-        try {
-            afiliadoService.eliminarAfiliado(id);
-            return ResponseEntity.ok("El afiliado se ha eliminado con éxito");
-        } catch (Exception e) {
-
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Error al eliminar el afiliado");
-        }
+    public String eliminarAfiliado(@PathVariable Long id){
+        afiliadoService.eliminarAfiliado(id);
+        return "El afiliado se ha eliminado con exito";
     }
 
     @GetMapping(path = "/afiliado/{id}")

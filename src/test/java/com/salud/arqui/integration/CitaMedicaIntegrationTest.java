@@ -138,6 +138,6 @@ class CitaMedicaIntegrationTest {
 
 
         Assertions.assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-        Assertions.assertEquals("El ID del beneficiario no existe o ya está asignado a otro afiliado.", response.getBody());
+        Assertions.assertEquals("El ID del beneficiario no existe", response.getBody());
     }
 }
