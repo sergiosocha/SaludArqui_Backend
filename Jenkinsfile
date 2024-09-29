@@ -37,6 +37,14 @@ pipeline {
             }
         }
 
+        stage('Scan Docker Image with Trivy') {
+            steps {
+                script {
+                    sh 'trivy image --exit-code 1 --severity HIGH,CRITICAL sergioss21/spring-api'
+                }
+            }
+        }
+
         stage('Push Docker Image') {
             steps {
                 script {
