@@ -22,7 +22,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles(profiles = "h2")
-public class CitaMedicaIntegrationTest {
+class CitaMedicaIntegrationTest {
 
     @Autowired
     private TestRestTemplate testRestTemplate;
@@ -41,7 +41,7 @@ public class CitaMedicaIntegrationTest {
 
 
     @Test
-    public void When_guardarCitaMedicaWithValidAfiliado_Then_citaMedicaGuardada() {
+    void When_guardarCitaMedicaWithValidAfiliado_Then_citaMedicaGuardada() {
 
         AfiliadoORM afiliado = new AfiliadoORM();
         afiliado.setNombre("Juan Perez");
@@ -66,7 +66,7 @@ public class CitaMedicaIntegrationTest {
 
 
     @Test
-    public void  When_guardarCitaMedicaAfiliadoNoExistente_Then_returnBadRequest() {
+    void  When_guardarCitaMedicaAfiliadoNoExistente_Then_returnBadRequest() {
         CitaMedicaDTO citaMedicaDTO = new CitaMedicaDTO("General", "Revisión anual", "2024-09-28", 999L, null);
         ResponseEntity<String> response = testRestTemplate.postForEntity("/citaMedica", citaMedicaDTO, String.class);
 
@@ -76,7 +76,7 @@ public class CitaMedicaIntegrationTest {
 
 
     @Test
-    public void When_guardarCitaMedicaSinAfiliadoNiBeneficiario_Then_returnBadRequest() {
+    void When_guardarCitaMedicaSinAfiliadoNiBeneficiario_Then_returnBadRequest() {
 
         CitaMedicaDTO citaMedicaDTO = new CitaMedicaDTO(
                 "General", "Revisión anual", "2024-09-28", null, null
@@ -95,7 +95,7 @@ public class CitaMedicaIntegrationTest {
 
     @Test
     @Transactional
-    public void when_GuardarCitaMedicaBeneficiario() {
+    void when_GuardarCitaMedicaBeneficiario() {
         AfiliadoDTO afiliadoInicial = new AfiliadoDTO("Juan Lopez", 40, "juan@mail.com", "M");
         ResponseEntity<String> responseAfiliado = testRestTemplate.postForEntity("/afiliado", afiliadoInicial, String.class);
 

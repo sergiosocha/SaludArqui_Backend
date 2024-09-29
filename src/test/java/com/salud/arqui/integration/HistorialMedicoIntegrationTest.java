@@ -1,26 +1,22 @@
 package com.salud.arqui.integration;
 
 import com.salud.arqui.controller.dto.AfiliadoDTO;
-import com.salud.arqui.controller.dto.BeneficiarioDTO;
 import com.salud.arqui.controller.dto.HistorialMedicoDTO;
 import com.salud.arqui.db.orm.HistorialMedicoORM;
 import com.salud.arqui.logica.HistorialMedicoService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 
-import java.util.List;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles(profiles = "h2")
-public class HistorialMedicoIntegrationTest {
+class HistorialMedicoIntegrationTest {
 
     @Autowired
     private TestRestTemplate testRestTemplate;
