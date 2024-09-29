@@ -20,7 +20,8 @@ public class AfiliadoService {
     private final AfiliadoJPA afiliadoJPA;
     private final HistorialMedicoJPA historialMedicoJPA;
 
-    public boolean guardarAfiliado(String nombre, Integer edad, String email, String genero){
+    public boolean guardarAfiliado(String nombre, Integer edad, String email, String genero)
+    {
         AfiliadoORM nuevoAfiliado = new AfiliadoORM();
         nuevoAfiliado.setNombre(nombre);
         nuevoAfiliado.setEdad(edad);
@@ -36,7 +37,8 @@ public class AfiliadoService {
     }
 
 
-    public List<AfiliadoORM> listaAfiliados(){
+    public List<AfiliadoORM> listaAfiliados()
+    {
         return afiliadoJPA.findAll();
     }
 
@@ -45,7 +47,8 @@ public class AfiliadoService {
 
     }
 
-    public AfiliadoORM buscarAfiliadoId(Long id){
+    public AfiliadoORM buscarAfiliadoId(Long id)
+    {
         return afiliadoJPA.findById(id).orElse(null);
     }
 
@@ -66,11 +69,4 @@ public class AfiliadoService {
 
         return true;
     }
-
-
-
-
-
-
-
 }
