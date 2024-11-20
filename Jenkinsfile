@@ -1,13 +1,8 @@
 pipeline {
     agent any
 
-    tools {
-            sonarQube 'sonarquebe1'
-        }
-
     stages {
-        stage('Checkout')
-        {
+        stage('Checkout') {
             steps {
                 git branch: 'Develop', url: 'https://github.com/sergiosocha/SaludArqui_Backend.git'
             }
@@ -15,8 +10,8 @@ pipeline {
 
         stage('Build') {
             steps {
-                     sh 'chmod +x ./gradlew'
-                    sh './gradlew clean build'
+                sh 'chmod +x ./gradlew'
+                sh './gradlew clean build'
             }
         }
 
@@ -26,11 +21,9 @@ pipeline {
             }
         }
 
-        stage('SonarQube Analysis')
-        {
+        stage('SonarQube Analysis') {
             steps {
-                withSonarQubeEnv('sonarquebe1')
-                {
+                withSonarQubeEnv('sonarquebe1') {
                     sh './gradlew sonarqube'
                 }
             }
@@ -44,10 +37,22 @@ pipeline {
             }
         }
 
+        stage('Scan Docker Image with Trivy') {
+            steps {
+                script {
+                    sh 'trivy image --exit-code 1 --severity CRITICAL --scanners vuln sergioss21/spring-api'
+                }
+            }
+        }
+
         stage('Push Docker Image') {
             steps {
                 script {
-                    sh 'docker push sergioss21/spring-api'
+
+                    withCredentials([usernamePassword(credentialsId: 'DockerHub', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASSWORD')]) {
+                        sh "docker login -u $DOCKER_USER -p $DOCKER_PASSWORD"
+                        sh 'docker push sergioss21/spring-api'
+                    }
                 }
             }
         }

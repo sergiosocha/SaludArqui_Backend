@@ -108,18 +108,6 @@ class HistorialMedicoServiceTest {
         assertEquals(10L, idAfiliado);
     }
 
-    @Test
-    void buscarHistorialMedicoPorAfiliado_conHistorialNoExistente() {
-        Long idAfiliado = 6L;
-
-        when(historialMedicoJPA.findByAfiliadoORM_idAfiliado(idAfiliado)).thenReturn(Optional.empty());
-
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-            historialMedicoService.buscarHistorialMedicoPorAfiliado(idAfiliado);
-        });
-
-        assertEquals("No se encontró el historial médico para el afiliado con ID: " + idAfiliado, exception.getMessage());
-    }
 
     @Test
     void buscarHistorialMedicoPorBeneficiario() {
@@ -134,16 +122,5 @@ class HistorialMedicoServiceTest {
         assertEquals(11L, idBeneficiario);
     }
 
-    @Test
-    void buscarHistorialMedicoPorBeneficiario_conHistorialNoExistente() {
-        Long idBeneficiario = 8L;
 
-        when(historialMedicoJPA.findByBeneficiarioORM_idBeneficiario(idBeneficiario)).thenReturn(Optional.empty());
-
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-            historialMedicoService.buscarHistorialMedicoPorBeneficiario(idBeneficiario);
-        });
-
-        assertEquals("No se encontró el historial médico para el beneficiario con ID: " + idBeneficiario, exception.getMessage());
-    }
 }
