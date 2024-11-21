@@ -38,7 +38,7 @@ class AfiliadoServiceTest {
     void guardarAfiliado() {
         String nombre = "sebastian";
         Integer edad = 30;
-        String email = "juan@example.com";
+        String email = "sebas.picas05@gmail.com";
         String genero = "Masculino";
 
         boolean result = afiliadoService.guardarAfiliado(nombre, edad, email, genero);
@@ -50,6 +50,7 @@ class AfiliadoServiceTest {
     }
 
     @Test
+    @Transactional
     void listaAfiliados() {
         afiliadoService.guardarAfiliado("Juan Perez", 30, "juan@example.com", "Masculino");
         afiliadoService.guardarAfiliado("Maria Gomez", 25, "maria@example.com", "Femenino");
