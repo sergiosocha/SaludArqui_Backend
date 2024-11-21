@@ -7,9 +7,9 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitMQConfig {
 
-    public static final String EXCHANGE_NAME = "example_exchange";
-    public static final String QUEUE_NAME = "example_queue";
-    public static final String ROUTING_KEY = "example_routing_key";
+    public static final String EXCHANGE_NAME = "RegistroBeneficiario";
+    public static final String QUEUE_NAME = "RegistroBeneficiario";
+    public static final String ROUTING_KEY = "RegistroBeneficiario";
 
     @Bean
     public DirectExchange exchange() {
