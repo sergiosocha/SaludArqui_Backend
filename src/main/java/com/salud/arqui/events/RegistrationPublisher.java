@@ -12,7 +12,7 @@ public class RegistrationPublisher {
         this.rabbitTemplate = rabbitTemplate;
     }
 
-    public void sendMessage(String message) {
+    public void sendMessage(long message) {
         rabbitTemplate.convertAndSend(
                 RabbitMQConfig.EXCHANGE_NAME,
                 RabbitMQConfig.ROUTING_KEY,
