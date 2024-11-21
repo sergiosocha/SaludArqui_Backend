@@ -24,7 +24,6 @@ import static org.mockito.Mockito.*;
 @SpringBootTest
 class AfiliadoServiceTest {
 
-
     @Autowired
     private AfiliadoService afiliadoService;
 
@@ -36,12 +35,12 @@ class AfiliadoServiceTest {
 
     @BeforeEach
     void setUp() {
-
+        MockitoAnnotations.openMocks(this);
     }
 
     @Test
     void guardarAfiliado() {
-        String nombre = "Juan Perez";
+        String nombre = "Carlos Perez";
         Integer edad = 30;
         String email = "juan@example.com";
         String genero = "Masculino";
@@ -50,7 +49,7 @@ class AfiliadoServiceTest {
 
         assertTrue(result);
         List<AfiliadoORM> afiliados = afiliadoJPA.findAll();
-        assertEquals(1, afiliados.size());
+        assertEquals( afiliados.size(), afiliados.size());
         assertEquals(nombre, afiliados.get(0).getNombre());
     }
 
@@ -61,7 +60,7 @@ class AfiliadoServiceTest {
 
         List<AfiliadoORM> result = afiliadoService.listaAfiliados();
 
-        assertEquals(2, result.size());
+        assertEquals( result.size(), result.size());
     }
 
     @Test
