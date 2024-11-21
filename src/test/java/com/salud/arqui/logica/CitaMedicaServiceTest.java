@@ -8,11 +8,13 @@ import com.salud.arqui.db.orm.AfiliadoORM;
 import com.salud.arqui.db.orm.BeneficiarioORM;
 import com.salud.arqui.db.orm.CitaMedicaORM;
 import com.salud.arqui.db.orm.HistorialMedicoORM;
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -25,6 +27,7 @@ import static org.mockito.Mockito.*;
 
 
 
+@Transactional
 class CitaMedicaServiceTest {
 
     @Mock
