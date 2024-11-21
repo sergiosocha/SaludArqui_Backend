@@ -1,25 +1,20 @@
 package com.salud.arqui.logica;
 
-import com.salud.arqui.controller.dto.BeneficiarioDTO;
 import com.salud.arqui.db.jpa.AfiliadoJPA;
 import com.salud.arqui.db.jpa.HistorialMedicoJPA;
 import com.salud.arqui.db.orm.AfiliadoORM;
-import com.salud.arqui.db.orm.BeneficiarioORM;
-import com.salud.arqui.db.orm.HistorialMedicoORM;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.Arrays;
+
 import java.util.List;
-import java.util.Optional;
+
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+
 
 @SpringBootTest
 class AfiliadoServiceTest {
