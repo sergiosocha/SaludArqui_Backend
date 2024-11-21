@@ -37,7 +37,7 @@ pipeline {
             }
         }
 
-        stage('Scan Docker Image with Trivy') {
+       stage('Scan Docker Image with Trivy') {
             steps {
                 script {
                     sh 'trivy image --exit-code 1 --severity CRITICAL --scanners vuln --cache-dir /var/jenkins_home/trivy-cache sergioss21/spring-api'
