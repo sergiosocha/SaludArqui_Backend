@@ -3,6 +3,7 @@ package com.salud.arqui.logica;
 import com.salud.arqui.db.jpa.AfiliadoJPA;
 import com.salud.arqui.db.jpa.HistorialMedicoJPA;
 import com.salud.arqui.db.orm.AfiliadoORM;
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
@@ -15,7 +16,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-
+@Transactional
 @SpringBootTest
 class AfiliadoServiceTest {
 
@@ -35,7 +36,7 @@ class AfiliadoServiceTest {
 
     @Test
     void guardarAfiliado() {
-        String nombre = "Carlos Perez";
+        String nombre = "sebastian";
         Integer edad = 30;
         String email = "juan@example.com";
         String genero = "Masculino";
