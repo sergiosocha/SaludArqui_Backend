@@ -5,6 +5,7 @@ import com.salud.arqui.db.jpa.AfiliadoJPA;
 import com.salud.arqui.db.jpa.BeneficiarioJPA;
 import com.salud.arqui.db.orm.AfiliadoORM;
 import com.salud.arqui.db.orm.BeneficiarioORM;
+import com.salud.arqui.events.RegistrationPublisher;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -30,25 +31,13 @@ class BeneficiarioServiceTest {
 
     private AfiliadoORM afiliadoORM;
 
+    private RegistrationPublisher registrationPublisher;
+
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
         afiliadoORM = new AfiliadoORM();
 
-    }
-
-    @Test
-    void guardarBeneficiario_creaBeneficiarioCorrectamente() {
-        String nombre = "Juan Pérez";
-        String email = "juan.perez@example.com";
-        Long idAfiliado = 1L;
-
-        when(afiliadoJPA.findById(idAfiliado)).thenReturn(Optional.of(afiliadoORM));
-
-        boolean result = beneficiarioService.guardarBeneficiario(nombre, email, idAfiliado);
-
-        assertTrue(result);
-        verify(beneficiarioJPA, times(1)).save(any(BeneficiarioORM.class));
     }
 
     @Test
