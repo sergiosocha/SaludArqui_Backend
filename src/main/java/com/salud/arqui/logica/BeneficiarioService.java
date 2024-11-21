@@ -6,6 +6,7 @@ import com.salud.arqui.db.jpa.AfiliadoJPA;
 import com.salud.arqui.db.jpa.BeneficiarioJPA;
 import com.salud.arqui.db.orm.AfiliadoORM;
 import com.salud.arqui.db.orm.BeneficiarioORM;
+import com.salud.arqui.events.RegistrationPublisher;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,7 @@ public class BeneficiarioService {
 
     private final BeneficiarioJPA beneficiarioJPA;
     private final AfiliadoJPA afiliadoJPA;
+    private final RegistrationPublisher registrationPublisher;
 
     public boolean guardarBeneficiario(String nombre, String email, Long idAfiliado) {
 
@@ -44,6 +46,11 @@ public class BeneficiarioService {
         beneficiarioORM.setEmail(email);
         beneficiarioORM.setAfliliadoORM(afiliado);
         beneficiarioJPA.save(beneficiarioORM);
+
+        Long eventid = beneficiarioJPA.findByEmail(email).map(BeneficiarioORM::getIdBeneficiario).orElse(null);
+
+        registrationPublisher.sendMessage(eventid);
+
         return true;
     }
 
